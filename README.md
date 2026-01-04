@@ -1,6 +1,6 @@
-# Windows Event Viewer AI Analysis App
+# Windows Event Viewer AI
 
-A responsive web application that analyzes Windows Event Logs using Microsoft Foundry Local AI models.
+A Flask-based web application that analyzes Windows Event Logs using AI models. Supports both **Microsoft Foundry Local** (for offline use) and **Google Gemini API** (for online analysis).
 
 ## Features
 
