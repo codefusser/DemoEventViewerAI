@@ -1,0 +1,136 @@
+{
+  "timestamp": "2026-01-04T03:22:35.307232",
+  "log_type": "System",
+  "source_name": null,
+  "event_id": null,
+  "event_count": 14,
+  "events": [
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:55:00 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:51:58 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:30:36 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:30:34 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:07:14 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:06:59 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 01:31:38 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 01:30:54 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 01:25:10 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 01:24:31 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 01:19:19 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 01:18:37 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 610,
+      "SourceName": "SCardSvr",
+      "TimeGenerated": "Sun Jan  4 01:00:53 2026",
+      "EventCategory": 0,
+      "EventType": 1,
+      "Message": "<The description for Event ID ( 610 ) in Source ( 'SCardSvr' ) could not be found. It contains the following insertion string(s):'This smart card does not support the requested feature., Windows Hello for Business 1, GET_ATTRIBUTE, 01 01 01 00'.>",
+      "LogType": "System"
+    },
+    {
+      "EventID": 105,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 00:08:50 2026",
+      "EventCategory": 100,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    }
+  ],
+  "analysis": "Gemini API error: 400 * GenerateContentRequest.model: unexpected model name format\n"
+}

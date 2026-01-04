@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-01-03T23:44:32.527217",
+  "log_type": "System",
+  "source_name": null,
+  "event_id": null,
+  "event_count": 8,
+  "events": [
+    {
+      "EventID": 1014,
+      "SourceName": "Microsoft-Windows-DNS-Client",
+      "TimeGenerated": "Sat Jan  3 22:27:22 2026",
+      "EventCategory": 1014,
+      "EventType": 2,
+      "Message": "Name resolution for the name downloads77-windows.x9fnzrtl4x8pynsf.com timed out after none of the configured DNS servers responded. Client PID 9908.\r\n",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1073748845,
+      "SourceName": "Netwtw06",
+      "TimeGenerated": "Sat Jan  3 22:27:10 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "7021 - Connection telemetry fields and analysis usage\r\n",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1,
+      "SourceName": "Microsoft-Windows-Configuration-Change-Monitor",
+      "TimeGenerated": "Sat Jan  3 22:27:09 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1,
+      "SourceName": "Microsoft-Windows-Configuration-Change-Monitor",
+      "TimeGenerated": "Sat Jan  3 22:27:09 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1,
+      "SourceName": "Microsoft-Windows-Configuration-Change-Monitor",
+      "TimeGenerated": "Sat Jan  3 22:27:09 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1,
+      "SourceName": "Microsoft-Windows-Configuration-Change-Monitor",
+      "TimeGenerated": "Sat Jan  3 22:27:09 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1073746135,
+      "SourceName": "NetBT",
+      "TimeGenerated": "Sat Jan  3 22:27:08 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "Initialization failed because the driver device could not be created.\r\nUse the string \"(null)\" to identify the interface for which initialization\r\nfailed. It represents the MAC address of the failed interface or the \r\nGlobally Unique Interface Identifier (GUID) if NetBT was unable to \r\nmap from GUID to MAC address. If neither the MAC address nor the GUID were \r\navailable, the string represents a cluster device name.\r\n\r\n",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1073746135,
+      "SourceName": "NetBT",
+      "TimeGenerated": "Sat Jan  3 22:27:08 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "Initialization failed because the driver device could not be created.\r\nUse the string \"(null)\" to identify the interface for which initialization\r\nfailed. It represents the MAC address of the failed interface or the \r\nGlobally Unique Interface Identifier (GUID) if NetBT was unable to \r\nmap from GUID to MAC address. If neither the MAC address nor the GUID were \r\navailable, the string represents a cluster device name.\r\n\r\n",
+      "LogType": "System"
+    }
+  ],
+  "analysis": "Model endpoint timeout (120s): The model is taking too long to respond.\n\nVerify:\n- Foundry Local is running on http://localhost:50146/v1/chat/completions\n- Model 'qwen2.5-7b-instruct-generic-cpu:4' is loaded\n- System has enough resources\n\nFallback analysis:\nSource: Microsoft-Windows-DNS-Client\nEventID: 1014\nMessage excerpt: Name resolution for the name downloads77-windows.x9fnzrtl4x8pynsf.com timed out after none of the configured DNS servers responded. Client PID 9908.\nNo clear pattern detected from heuristics.\nRecommended: Review full event message and check surrounding events."
+}

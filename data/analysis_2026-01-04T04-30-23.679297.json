@@ -1,0 +1,118 @@
+{
+  "timestamp": "2026-01-04T04:30:23.679297",
+  "log_type": "System",
+  "source_name": null,
+  "event_id": null,
+  "event_count": 12,
+  "events": [
+    {
+      "EventID": 10016,
+      "SourceName": "DCOM",
+      "TimeGenerated": "Sun Jan  4 04:22:04 2026",
+      "EventCategory": 0,
+      "EventType": 2,
+      "Message": "<The description for Event ID ( 10016 ) in Source ( 'DCOM' ) could not be found. It contains the following insertion string(s):'application-specific, Local, Activation, {2593F8B9-4EAF-457C-B68A-50F6B8EA6B54}, {15C20B67-12E7-4BB6-92BB-7AFF07997402}, HUBSNIPPETLT, Administrator, S-1-5-21-3460715379-1733425474-198346408-500, LocalHost (Using LRPC), Clipchamp.Clipchamp_4.4.10720.0_x64__yxz26nhyzhsrt, Unavailable'.>",
+      "LogType": "System"
+    },
+    {
+      "EventID": 16,
+      "SourceName": "Microsoft-Windows-Kernel-General",
+      "TimeGenerated": "Sun Jan  4 03:38:28 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:55:00 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:51:58 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:30:36 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:30:34 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:07:14 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 02:06:59 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 01:31:38 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 01:30:54 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 01:25:10 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 566,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 01:24:31 2026",
+      "EventCategory": 268,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    }
+  ],
+  "analysis": "Model endpoint timeout (120s): The model is taking too long to respond.\n\nVerify:\n- Foundry Local is running on http://localhost:50146/v1/chat/completions\n- Model 'Phi-4-mini-reasoning-generic-cpu:3' is loaded\n- System has enough resources\n\nFallback analysis:\nSource: DCOM\nEventID: 10016\nMessage excerpt: <The description for Event ID ( 10016 ) in Source ( 'DCOM' ) could not be found. It contains the following insertion string(s):'application-specific, Local, Activation, {2593F8B9-4EAF-457C-B68A-50F6B8EA6B54}, {15C20B67-12E7-4BB6-92BB-7AFF07997402}, HUBSNIPPETLT, Administrator, S-1-5-21-3460715379-1733425474-198346408-500, LocalHost (Using LRPC), Clipchamp.Clipchamp_4.4.10720.0_x64__yxz26nhyzhsrt, \nNo clear pattern detected from heuristics.\nRecommended: Review full event message and check surrounding events."
+}

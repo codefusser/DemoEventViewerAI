@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Event Viewer AI Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Windows Event Viewer AI Analysis</h1>
+            <p>Analyze Windows Event Logs with Microsoft Foundry Local AI</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Navigation Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="analyzer">Analyzer</button>
+                <button class="tab-btn" data-tab="history">Analysis History</button>
+            </div>
+
+            <!-- Tab 1: Analyzer -->
+            <div id="analyzer" class="tab-content active">
+                <form id="analyzerForm" class="form-container">
+                    <!-- Configuration Section -->
+                    <div class="form-section">
+                        <h2>Model Configuration</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="modelProvider">Model Provider:</label>
+                                <select id="modelProvider" name="modelProvider">
+                                    <option value="foundry">Foundry Local (Default)</option>
+                                    <option value="gemini">Google Gemini AI</option>
+                                </select>
+                                <small>Select AI model provider for analysis</small>
+                            </div>
+                        </div>
+                        <div class="form-row" id="foundrySection">
+                            <div class="form-group">
+                                <label for="modelEndpoint">Model Endpoint:</label>
+                                <input type="text" id="modelEndpoint" name="modelEndpoint" 
+                                       value="http://localhost:50146/v1/chat/completions" 
+                                       placeholder="http://localhost:50146/v1/chat/completions">
+                            </div>
+                            <div class="form-group">
+                                <label for="modelName">Model Name:</label>
+                                <input type="text" id="modelName" name="modelName" 
+                                       value="Phi-4-mini-reasoning-generic-cpu:3" 
+                                       placeholder="e.g., Phi-4-mini-reasoning-generic-cpu:3">
+                            </div>
+                        </div>
+                        <div class="form-row" id="geminiSection" style="display: none;">
+                            <div class="form-group">
+                                <label for="geminiApiKey">Gemini API Key:</label>
+                                <input type="password" id="geminiApiKey" name="geminiApiKey" 
+                                       placeholder="Your Google Gemini API key">
+                                <small><a href="https://ai.google.dev/tutorials/python_quickstart" target="_blank">Get API key</a></small>
+                            </div>
+                        </div>
+                        <div class="form-actions" style="justify-content: flex-start; margin-top: 15px;">
+                            <button type="button" id="checkModelBtn" class="btn btn-secondary">Check Model Status</button>
+                        </div>
+                        <div id="modelStatusMessage" class="info-message" style="display: none; margin-top: 15px;"></div>
+                    </div>
+
+                    <!-- Event Selection Section -->
+                    <div class="form-section">
+                        <h2>Event Selection</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="logType">Log Type: <span class="required">*</span></label>
+                                <select id="logType" name="logType" required>
+                                    <option value="">-- Select Log Type --</option>
+                                </select>
+                                <small>Loading available log types...</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="sourceName">Source Name:</label>
+                                <select id="sourceName" name="sourceName">
+                                    <option value="">-- Any Source --</option>
+                                </select>
+                                <small>Loading available sources...</small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventId">Event ID:</label>
+                                <input type="number" id="eventId" name="eventId" 
+                                       placeholder="e.g., 1000" min="0">
+                                <small>Optional: Leave blank to retrieve all events from selected source</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="maxCount">Max Events to Retrieve:</label>
+                                <input type="number" id="maxCount" name="maxCount" 
+                                       value="50" min="1" max="500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Prompt Section -->
+                    <div class="form-section">
+                        <h2>Analysis Prompt (Optional)</h2>
+                        <div class="form-group">
+                            <label for="customPrompt">Custom Analysis Prompt:</label>
+                            <textarea id="customPrompt" name="customPrompt" rows="4" 
+                                      placeholder="Leave blank to use default diagnostic analysis prompt..."></textarea>
+                            <small>If left blank, uses: 'Analyze these Windows event logs and explain what they mean, if they indicate problems, possible causes, and recommended fixes.'</small>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="form-actions">
+                        <button type="button" id="previewBtn" class="btn btn-secondary">Preview Events</button>
+                        <button type="submit" class="btn btn-primary">Analyze with AI</button>
+                    </div>
+                </form>
+
+                <!-- Events Preview Section -->
+                <div id="eventsPreview" class="preview-section" style="display: none;">
+                    <h2>Events Preview</h2>
+                    <div id="previewLoading" class="loading" style="display: none;">
+                        <p>Loading events...</p>
+                    </div>
+                    <table id="eventsTable" class="data-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>Time Generated</th>
+                                <th>Event ID</th>
+                                <th>Source</th>
+                                <th>Type</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="previewError" class="error-message" style="display: none;"></div>
+                </div>
+
+                <!-- Analysis Results Section -->
+                <div id="analysisResults" class="results-section" style="display: none;">
+                    <h2>Analysis Results</h2>
+                    <div id="resultLoading" class="loading" style="display: none;">
+                        <p>Analyzing events... This may take a moment.</p>
+                    </div>
+                    <div id="analysisContent" style="display: none;">
+                        <div class="result-info">
+                            <p><strong>Log Type:</strong> <span id="resultLogType"></span></p>
+                            <p><strong>Source Name:</strong> <span id="resultSourceName"></span></p>
+                            <p><strong>Event ID:</strong> <span id="resultEventId"></span></p>
+                            <p><strong>Events Found:</strong> <span id="resultEventCount"></span></p>
+                            <p><strong>Result Saved:</strong> <span id="resultFile"></span></p>
+                        </div>
+                        <div class="analysis-text">
+                            <h3>AI Analysis</h3>
+                            <pre id="analysisText"></pre>
+                        </div>
+                    </div>
+                    <div id="resultError" class="error-message" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Analysis History -->
+            <div id="history" class="tab-content">
+                <div class="history-section">
+                    <h2>Previous Analysis Results</h2>
+                    <div id="historyLoading" class="loading" style="display: none;">
+                        <p>Loading history...</p>
+                    </div>
+                    <div id="historyList" class="history-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Chat Floating Button -->
+<button id="chatBtn" class="chat-fab" title="Open chat">💬</button>
+
+<!-- Chat Modal -->
+<div id="chatModal" class="chat-modal" style="display:none;">
+  <div class="chat-panel">
+    <button id="chatClose" class="chat-close">&times;</button>
+    <h3>Event Chat</h3>
+    <div id="chatContextInfo" class="chat-context-info">No events loaded yet.</div>
+    <div id="chatMessages" class="chat-messages"></div>
+    <div class="chat-input-row">
+      <input id="chatInput" type="text" placeholder="Ask a follow-up question..." />
+      <button id="chatSend" class="btn btn-primary">Send</button>
+    </div>
+  </div>
+</div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

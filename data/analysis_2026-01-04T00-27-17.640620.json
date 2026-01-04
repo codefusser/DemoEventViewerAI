@@ -1,0 +1,73 @@
+{
+  "timestamp": "2026-01-04T00:27:17.640620",
+  "log_type": "System",
+  "source_name": null,
+  "event_id": null,
+  "event_count": 7,
+  "events": [
+    {
+      "EventID": 105,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Sun Jan  4 00:08:50 2026",
+      "EventCategory": 100,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 37,
+      "SourceName": "Microsoft-Windows-Time-Service",
+      "TimeGenerated": "Sat Jan  3 23:44:16 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "The time provider NtpClient is currently receiving valid time data from time.windows.com,0x9 (ntp.m|0x9|0.0.0.0:123->168.61.215.74:123).\r\n",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1014,
+      "SourceName": "Microsoft-Windows-DNS-Client",
+      "TimeGenerated": "Sat Jan  3 22:27:22 2026",
+      "EventCategory": 1014,
+      "EventType": 2,
+      "Message": "Name resolution for the name downloads77-windows.x9fnzrtl4x8pynsf.com timed out after none of the configured DNS servers responded. Client PID 9908.\r\n",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1073748845,
+      "SourceName": "Netwtw06",
+      "TimeGenerated": "Sat Jan  3 22:27:10 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "7021 - Connection telemetry fields and analysis usage\r\n",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1,
+      "SourceName": "Microsoft-Windows-Configuration-Change-Monitor",
+      "TimeGenerated": "Sat Jan  3 22:27:09 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1,
+      "SourceName": "Microsoft-Windows-Configuration-Change-Monitor",
+      "TimeGenerated": "Sat Jan  3 22:27:09 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1,
+      "SourceName": "Microsoft-Windows-Configuration-Change-Monitor",
+      "TimeGenerated": "Sat Jan  3 22:27:09 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    }
+  ],
+  "analysis": "Model endpoint timeout (120s): The model is taking too long to respond.\n\nVerify:\n- Foundry Local is running on http://localhost:50146/v1/chat/completions\n- Model 'qwen2.5-7b-instruct-generic-cpu:4' is loaded\n- System has enough resources\n\nFallback analysis:\nSource: Microsoft-Windows-Kernel-Power\nEventID: 105\nLikely issue: Power-related event (unexpected shutdown, sleep/resume, or power loss).\nRecommended: Check power supply/UPS, AC adapter, battery; review surrounding events."
+}
