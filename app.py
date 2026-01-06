@@ -27,11 +27,11 @@ app.config['JSON_SORT_KEYS'] = False
 # ================================================================================
 # Configuration
 # ================================================================================
-DEFAULT_MODEL_ENDPOINT = "http://localhost:52453/v1/chat/completions"  # Microsoft Foundry Local
-DEFAULT_MODEL_NAME = "Phi-4-mini-instruct-generic-cpu:3"  # Foundry Local default model
+DEFAULT_MODEL_ENDPOINT = "http://localhost:5272/v1/chat/completions"  # Microsoft Foundry Local
+DEFAULT_MODEL_NAME = "Phi-4-mini-instruct-generic-cpu"  # Foundry Local default model
 MODEL_TIMEOUT = 120  # Timeout for model inference (seconds)
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')  # Get from environment variable
-GEMINI_MODEL = 'models/gemini-2.5-flash'  # Latest Gemini model
+GEMINI_MODEL = 'models/gemini-2.0-flash'  # Latest Gemini model
 DATA_DIR = Path("data")
 DATA_DIR.mkdir(exist_ok=True)
 
