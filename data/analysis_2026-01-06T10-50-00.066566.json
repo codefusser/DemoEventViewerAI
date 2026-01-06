@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-01-06T10:50:00.066566",
+  "log_type": "System",
+  "source_name": null,
+  "event_id": null,
+  "event_count": 8,
+  "events": [
+    {
+      "EventID": 37,
+      "SourceName": "Microsoft-Windows-Time-Service",
+      "TimeGenerated": "Tue Jan  6 10:30:37 2026",
+      "EventCategory": 0,
+      "EventType": 4,
+      "Message": "The time provider NtpClient is currently receiving valid time data from time.windows.com,0x9 (ntp.m|0x9|0.0.0.0:123->51.145.123.29:123).\r\n",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1014,
+      "SourceName": "Microsoft-Windows-DNS-Client",
+      "TimeGenerated": "Tue Jan  6 10:28:30 2026",
+      "EventCategory": 1014,
+      "EventType": 2,
+      "Message": "Name resolution for the name www.bing.com timed out after none of the configured DNS servers responded. Client PID 8448.\r\n",
+      "LogType": "System"
+    },
+    {
+      "EventID": 10016,
+      "SourceName": "DCOM",
+      "TimeGenerated": "Tue Jan  6 10:27:25 2026",
+      "EventCategory": 0,
+      "EventType": 2,
+      "Message": "<The description for Event ID ( 10016 ) in Source ( 'DCOM' ) could not be found. It contains the following insertion string(s):'application-specific, Local, Activation, {2593F8B9-4EAF-457C-B68A-50F6B8EA6B54}, {15C20B67-12E7-4BB6-92BB-7AFF07997402}, HUBSNIPPETLT, Administrator, S-1-5-21-3460715379-1733425474-198346408-500, LocalHost (Using LRPC), Unavailable, Unavailable'.>",
+      "LogType": "System"
+    },
+    {
+      "EventID": 105,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Tue Jan  6 10:16:50 2026",
+      "EventCategory": 100,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 105,
+      "SourceName": "Microsoft-Windows-Kernel-Power",
+      "TimeGenerated": "Tue Jan  6 10:01:49 2026",
+      "EventCategory": 100,
+      "EventType": 4,
+      "Message": "",
+      "LogType": "System"
+    },
+    {
+      "EventID": 10016,
+      "SourceName": "DCOM",
+      "TimeGenerated": "Tue Jan  6 09:52:49 2026",
+      "EventCategory": 0,
+      "EventType": 2,
+      "Message": "<The description for Event ID ( 10016 ) in Source ( 'DCOM' ) could not be found. It contains the following insertion string(s):'application-specific, Local, Activation, {2593F8B9-4EAF-457C-B68A-50F6B8EA6B54}, {15C20B67-12E7-4BB6-92BB-7AFF07997402}, HUBSNIPPETLT, Administrator, S-1-5-21-3460715379-1733425474-198346408-500, LocalHost (Using LRPC), Unavailable, Unavailable'.>",
+      "LogType": "System"
+    },
+    {
+      "EventID": 10016,
+      "SourceName": "DCOM",
+      "TimeGenerated": "Tue Jan  6 09:42:54 2026",
+      "EventCategory": 0,
+      "EventType": 2,
+      "Message": "<The description for Event ID ( 10016 ) in Source ( 'DCOM' ) could not be found. It contains the following insertion string(s):'application-specific, Local, Activation, {2593F8B9-4EAF-457C-B68A-50F6B8EA6B54}, {15C20B67-12E7-4BB6-92BB-7AFF07997402}, HUBSNIPPETLT, Administrator, S-1-5-21-3460715379-1733425474-198346408-500, LocalHost (Using LRPC), Unavailable, Unavailable'.>",
+      "LogType": "System"
+    },
+    {
+      "EventID": 1014,
+      "SourceName": "Microsoft-Windows-DNS-Client",
+      "TimeGenerated": "Tue Jan  6 09:41:11 2026",
+      "EventCategory": 1014,
+      "EventType": 2,
+      "Message": "Name resolution for the name login.live.com timed out after none of the configured DNS servers responded. Client PID 9784.\r\n",
+      "LogType": "System"
+    }
+  ],
+  "analysis": "Model endpoint timeout (120s): The model is taking too long to respond.\n\nVerify:\n- Foundry Local is running on http://localhost:52453/v1/chat/completions\n- Model 'qwen2.5-7b-instruct-generic-cpu:4' is loaded\n- System has enough resources\n\nFallback analysis:\nSource: Microsoft-Windows-Time-Service\nEventID: 37\nMessage excerpt: The time provider NtpClient is currently receiving valid time data from time.windows.com,0x9 (ntp.m|0x9|0.0.0.0:123->51.145.123.29:123).\nNo clear pattern detected from heuristics.\nRecommended: Review full event message and check surrounding events."
+}
