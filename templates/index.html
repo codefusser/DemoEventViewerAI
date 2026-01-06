@@ -11,7 +11,7 @@
         <!-- Header -->
         <header class="header">
             <h1>Windows Event Viewer AI Analysis</h1>
-            <p>Analyze Windows Event Logs with Microsoft Foundry Local AI</p>
+            <p>Analyze Windows Event Logs with AI (Microsoft Foundry Local or Google Gemini)</p>
         </header>
 
         <!-- Main Content -->
@@ -42,14 +42,14 @@
                             <div class="form-group">
                                 <label for="modelEndpoint">Model Endpoint:</label>
                                 <input type="text" id="modelEndpoint" name="modelEndpoint" 
-                                       value="http://localhost:50146/v1/chat/completions" 
-                                       placeholder="http://localhost:50146/v1/chat/completions">
+                                       value="http://localhost:5272/v1/chat/completions" 
+                                       placeholder="http://localhost:5272/v1/chat/completions">
                             </div>
                             <div class="form-group">
                                 <label for="modelName">Model Name:</label>
                                 <input type="text" id="modelName" name="modelName" 
-                                       value="Phi-4-mini-reasoning-generic-cpu:3" 
-                                       placeholder="e.g., Phi-4-mini-reasoning-generic-cpu:3">
+                                       value="Phi-4-mini-instruct-generic-cpu" 
+                                       placeholder="e.g., Phi-4-mini-instruct-generic-cpu">
                             </div>
                         </div>
                         <div class="form-row" id="geminiSection" style="display: none;">

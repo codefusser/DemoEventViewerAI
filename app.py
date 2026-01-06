@@ -24,32 +24,34 @@ except ImportError:
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 
+# ================================================================================
 # Configuration
-DEFAULT_MODEL_ENDPOINT = "http://localhost:50146/v1/chat/completions"
-# DEFAULT_MODEL_NAME = "qwen2.5-7b-instruct-generic-cpu:4"
-DEFAULT_MODEL_NAME = "Phi-4-mini-reasoning-generic-cpu:3"
-MODEL_TIMEOUT = 120  # Increased timeout for model inference (seconds)
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')  # Get from env var or form input
+# ================================================================================
+DEFAULT_MODEL_ENDPOINT = "http://localhost:52453/v1/chat/completions"  # Microsoft Foundry Local
+DEFAULT_MODEL_NAME = "Phi-4-mini-instruct-generic-cpu:3"  # Foundry Local default model
+MODEL_TIMEOUT = 120  # Timeout for model inference (seconds)
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')  # Get from environment variable
+GEMINI_MODEL = 'models/gemini-2.5-flash'  # Latest Gemini model
 DATA_DIR = Path("data")
 DATA_DIR.mkdir(exist_ok=True)
 
 # Standard Windows Event Log types
 EVENTLOG_TYPES = ["System", "Application", "Security", "Setup"]
 
-# Helper Functions
-# ----------------
-# ------------------------------------------------------------------------------
+# ================================================================================
 # Windows Event Log Functions
-# ------------------------------------------------------------------------------
-# ----------------------------------------------------------------------
-# Event Log Retrieval and Analysis
-# ----------------------------------------------------------------------
-# ----------------------------------------------------------------------
-# Event Log Retrieval
-# ----------------------------------------------------------------------    
-# ----------------------------------------------------------------------  
+# ================================================================================
+
 def get_all_event_sources(log_type):
-    """Retrieve all source names from a Windows Event Log type."""
+    """
+    Retrieve all source names from a Windows Event Log type.
+    
+    Args:
+        log_type: Windows event log type (System, Application, Security, Setup)
+        
+    Returns:
+        Sorted list of source names from the event log
+    """
     try:
         handle = win32evtlog.OpenEventLog(None, log_type)
         # Read events to discover sources - note: sources come from event records
@@ -67,11 +69,20 @@ def get_all_event_sources(log_type):
     except Exception as e:
         return [f"Error: {str(e)}"]
 
-# ----------------------------------------------------------------------
-# Event Log Retrieval by Criteria
-# ----------------------------------------------------------------------
+
 def get_events_by_criteria(log_type, source_name=None, event_id=None, max_count=100):
-    """Retrieve events matching specified criteria."""
+    """
+    Retrieve events matching specified criteria.
+    
+    Args:
+        log_type: Event log type to query
+        source_name: Filter by source name (optional)
+        event_id: Filter by event ID (optional)
+        max_count: Maximum number of events to retrieve
+        
+    Returns:
+        List of matching event dictionaries or error dict
+    """
     try:
         handle = win32evtlog.OpenEventLog(None, log_type)
         flags = win32evtlog.EVENTLOG_BACKWARDS_READ | win32evtlog.EVENTLOG_SEQUENTIAL_READ
@@ -118,15 +129,22 @@ def get_events_by_criteria(log_type, source_name=None, event_id=None, max_count=
     except Exception as e:
         return {"error": str(e)}
 
-# ----------------------------------------------------------------------
-# AI Model Analysis Functions
-# ----------------------------------------------------------------------
 
-# ----------------------------------------------------------------------
-# Local Fallback Analysis
-# ----------------------------------------------------------------------
+# ================================================================================
+# AI Model Analysis Functions
+# ================================================================================
+
 def local_fallback_analysis(event_data):
-    """Simple heuristic analysis if model endpoint is unavailable."""
+    """
+    Simple heuristic analysis when AI model is unavailable.
+    Provides basic pattern matching for common Windows events.
+    
+    Args:
+        event_data: Single event dictionary or list of events
+        
+    Returns:
+        String with basic diagnostic analysis
+    """
     eid = int(event_data.get("EventID", 0) or 0)
     src = str(event_data.get("SourceName", "") or "")
     msg = str(event_data.get("Message", "") or "").strip()
@@ -146,11 +164,19 @@ def local_fallback_analysis(event_data):
 
     return "\n".join(parts)
 
-# ----------------------------------------------------------------------
-# Analyze with Gemini or Foundry Local Model
-# ----------------------------------------------------------------------
+
 def analyze_with_gemini(events_data, api_key, custom_prompt=None):
-    """Send events to Google Gemini API for analysis."""
+    """
+    Analyze events using Google Gemini AI API.
+    
+    Args:
+        events_data: List of events to analyze
+        api_key: Google Gemini API key
+        custom_prompt: Optional custom analysis prompt
+        
+    Returns:
+        Analysis result string or error message
+    """
     if not GEMINI_AVAILABLE:
         return "Gemini library not installed. Run: pip install google-generativeai"
     
@@ -159,7 +185,7 @@ def analyze_with_gemini(events_data, api_key, custom_prompt=None):
     
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('models/gemini-2.5-flash')
+        model = genai.GenerativeModel(GEMINI_MODEL)
         
         # Prepare event data (limit size)
         try:
@@ -184,11 +210,20 @@ Events Data:
     except Exception as e:
         return f"Gemini API error: {str(e)}"
 
-# ----------------------------------------------------------------------
-# Analyze with Foundry Local Model
-# ----------------------------------------------------------------------
+
 def analyze_with_model(events_data, model_endpoint, model_name, custom_prompt=None):
-    """Send events to Microsoft Foundry Local API for analysis."""
+    """
+    Analyze events using Microsoft Foundry Local model.
+    
+    Args:
+        events_data: List of events to analyze
+        model_endpoint: Foundry Local API endpoint URL
+        model_name: Name of the model to use
+        custom_prompt: Optional custom analysis prompt
+        
+    Returns:
+        Analysis result string or error message with fallback
+    """
     event_data = json.dumps(events_data, indent=2)[:95]  # Limit size for prompt
     # print(event_data)
     if custom_prompt:
@@ -252,11 +287,21 @@ def analyze_with_model(events_data, model_endpoint, model_name, custom_prompt=No
         fallback = local_fallback_analysis(events_data[0] if isinstance(events_data, list) else events_data)
         return f"Parse error: {e}\n\nFallback analysis:\n{fallback}"
 
-# ----------------------------------------------------------------------
-# Save Analysis Result
-# ----------------------------------------------------------------------
+
 def save_analysis_result(log_type, source_name, event_id, events, analysis):
-    """Save analysis result to JSON file."""
+    """
+    Save analysis result to JSON file.
+    
+    Args:
+        log_type: Event log type analyzed
+        source_name: Source name (if filtered)
+        event_id: Event ID (if filtered)
+        events: List of events that were analyzed
+        analysis: AI analysis result
+        
+    Returns:
+        Path to saved JSON file
+    """
     timestamp = datetime.now().isoformat()
     result = {
         "timestamp": timestamp,
@@ -275,18 +320,23 @@ def save_analysis_result(log_type, source_name, event_id, events, analysis):
     return str(filename)
 
 
-# Flask Routes
+# ================================================================================
+# Flask Routes & API Endpoints
+# ================================================================================
+
 @app.route('/')
 def index():
     """Serve main HTML page."""
     return render_template('index.html')
 
-# ----------------------------------------------------------------------
-# API Endpoints
-# ----------------------------------------------------------------------
+
 @app.route('/api/model-status', methods=['POST'])
 def model_status():
-    """Check if model endpoint is responding."""
+    """
+    Check if model endpoint is responding.
+    
+    Supports both Microsoft Foundry Local and Google Gemini endpoints.
+    """
     data = request.json
     model_endpoint = data.get('model_endpoint', DEFAULT_MODEL_ENDPOINT)
     model_name = data.get('model_name', DEFAULT_MODEL_NAME)
@@ -331,17 +381,13 @@ def model_status():
             "details": str(e)[:200]
         }), 500
 
-# ----------------------------------------------------------------------
-# Event Log API Endpoints
-# ----------------------------------------------------------------------
+
 @app.route('/api/log-types')
 def get_log_types():
-    """Return available event log types."""
+    """Return available event log types (System, Application, Security, Setup)."""
     return jsonify({"log_types": EVENTLOG_TYPES})
 
-# ----------------------------------------------------------------------
-# Event Source API Endpoint
-# ----------------------------------------------------------------------
+
 @app.route('/api/sources/<log_type>')
 def get_sources(log_type):
     """Return available source names for a log type."""
@@ -352,12 +398,9 @@ def get_sources(log_type):
     return jsonify({"sources": sources})
 
 
-# ----------------------------------------------------------------------
-# Event Retrieval API Endpoint
-# ----------------------------------------------------------------------
 @app.route('/api/events', methods=['POST'])
 def get_events():
-    """Retrieve events matching criteria."""
+    """Retrieve events matching criteria (log type, source, event ID)."""
     data = request.json
     log_type = data.get('log_type')
     source_name = data.get('source_name')
@@ -370,12 +413,14 @@ def get_events():
     events = get_events_by_criteria(log_type, source_name, event_id, max_count)
     return jsonify({"events": events})
 
-# ----------------------------------------------------------------------
-# Event Analysis API Endpoint
-# ----------------------------------------------------------------------
+
 @app.route('/api/analyze', methods=['POST'])
 def analyze():
-    """Analyze events with AI model."""
+    """
+    Analyze events with AI model (Foundry Local or Gemini).
+    
+    Accepts both Microsoft Foundry Local and Google Gemini model parameters.
+    """
     data = request.json
     log_type = data.get('log_type')
     source_name = data.get('source_name')
@@ -410,12 +455,14 @@ def analyze():
         "result_file": result_file
     })
 
-# ----------------------------------------------------------------------
-# Chat API Endpoint
-# ----------------------------------------------------------------------
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
-    """Chat endpoint for follow-up questions using retrieved events as context."""
+    """
+    Chat endpoint for follow-up questions using retrieved events as context.
+    
+    Supports both Foundry Local and Gemini models for interactive analysis.
+    """
     data = request.json or {}
     model_provider = data.get('model_provider', 'foundry')  # 'foundry' or 'gemini'
     model_endpoint = data.get('model_endpoint', DEFAULT_MODEL_ENDPOINT)
@@ -446,7 +493,7 @@ def chat():
         
         try:
             genai.configure(api_key=gemini_api_key)
-            model = genai.GenerativeModel('models/gemini-2.5-flash')
+            model = genai.GenerativeModel(GEMINI_MODEL)
             user_message = system_msg + "\n\nUser Question: " + question
             response = model.generate_content(user_message)
             reply = response.text if response else "Gemini returned empty response"
@@ -492,9 +539,8 @@ def chat():
             return jsonify({"reply": ""})
         except Exception as e:
             return jsonify({"error": f"Parse error: {e}"}), 500
-# ----------------------------------------------------------------------
-# Results API Endpoints
-# ----------------------------------------------------------------------    
+
+
 @app.route('/api/results')
 def get_results():
     """List all saved analysis results."""
@@ -507,9 +553,6 @@ def get_results():
     return jsonify({"results": results})
 
 
-# ----------------------------------------------------------------------
-# Results API Endpoints
-# ----------------------------------------------------------------------
 @app.route('/api/results/<filename>')
 def get_result(filename):
     """Get a specific analysis result."""
@@ -523,8 +566,15 @@ def get_result(filename):
     return jsonify(result)
 
 
-# ----------------------------------------------------------------------
-# Run the Flask app
-# ----------------------------------------------------------------------
+# ================================================================================
+# Application Entry Point
+# ================================================================================
+
 if __name__ == '__main__':
+    print("🚀 Starting Windows Event Viewer AI")
+    print(f"📡 Foundry Local endpoint: {DEFAULT_MODEL_ENDPOINT}")
+    print(f"🤖 Default model: {DEFAULT_MODEL_NAME}")
+    print(f"✨ Gemini model: {GEMINI_MODEL}")
+    print("🌐 Web interface: http://localhost:5000")
+    print(f"💾 Data directory: {DATA_DIR.absolute()}")
     app.run(debug=True, host='localhost', port=5000)

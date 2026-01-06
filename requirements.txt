@@ -1,4 +1,11 @@
+# Windows Event Viewer AI - Python Dependencies
+# Install with: pip install -r requirements.txt
+#
+# Note: Microsoft Foundry Local must be installed separately
+# Download from: https://learn.microsoft.com/en-us/azure/ai-foundry/
+# At least one model must be downloaded to Foundry Local before running
+
 Flask==3.0.0
 requests==2.31.0
 pywin32==306
-google-generativeai==0.3.0
+google-generativeai==0.7.0
